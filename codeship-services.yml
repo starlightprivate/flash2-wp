@@ -8,7 +8,7 @@ prod_build_wordpress:
     dockerfile_path: Dockerfile
   encrypted_env_file: deploy/prod/environment.env.encrypted
   cached: true
-  default_cache_branch: "production"
+  default_cache_branch: "master"
 
 #
 # deploy wordpress to k8s cluster
