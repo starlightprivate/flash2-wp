@@ -1,0 +1,39 @@
+#kind: PersistentVolumeClaim
+#metadata:
+#  name: mysqlwp-disk-claim
+#spec:
+#  accessModes:
+#    - ReadWriteOnce
+#  resources:
+#    requests:
+#      storage: 20Gi
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysqlwp
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysqlwp
+    spec:
+      containers:
+      - image: mysql:5.7.17
+        name: mysqlwp
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+        - name: mysqlwp-disk
+          mountPath: /var/lib/mysql
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: 1890792636ac85bb0031e7a18159c304
+          - name: MYSQL_DATABASE
+            value: wordpress
+      volumes:
+      - name: mysqlwp-disk
+        persistentVolumeClaim:
+          claimName: mysqlwp-disk-claim

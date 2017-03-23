@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ${APPLICATION_NAME}
+spec:
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: ${APPLICATION_NAME}
+    spec:
+      containers:
+      - image: ${IMAGE_REPO}/${IMAGE_NAME}:${IMAGE_TAG}
+        name: ${APPLICATION_NAME}
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+        - name: wp-disk
+          mountPath: /var/www/html
+      volumes:
+      - name: wp-disk
+        persistentVolumeClaim:
+          claimName: wp-disk-claim

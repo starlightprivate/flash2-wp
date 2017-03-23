@@ -1,0 +1,11 @@
+kind: PersistentVolume
+metadata:
+  name: mysqlwp-disk
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  gcePersistentDisk:
+    pdName: mysqlwp-disk
+    fsType: ext4

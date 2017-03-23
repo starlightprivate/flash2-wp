@@ -1,0 +1,23 @@
+- type: serial
+  steps:
+
+  #
+  # build docker image and push to registry
+  #
+
+    - service: prod_build_wordpress
+      type: push
+      image_name: gcr.io/flash2-production/wordpress
+      image_tag: "{{.CommitID}}"
+      registry: https://gcr.io
+      dockercfg_service: prod_gcr_dockercfg
+      tag: ^(master)
+
+  #
+  # deploy app to k8s cluster
+  #
+
+
+    - service: prod_google_cloud_deployment_wordpress
+      command: /deploy/deploy_wordpress.sh
+      tag: ^(master)

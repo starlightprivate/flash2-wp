@@ -1,0 +1,35 @@
+#
+# build docker image and push to registry
+#
+
+prod_build_wordpress:
+  build:
+    image: flash2-production/wordpress
+    dockerfile_path: wordpress/Dockerfile
+  encrypted_env_file: deploy/prod/environment.env.encrypted
+  cached: true
+  default_cache_branch: "production"
+
+#
+# deploy app to k8s cluster
+#
+
+prod_google_cloud_deployment_wordpress:
+  image: zachflower/google-cloud-deployment
+  add_docker: true
+  encrypted_env_file: deploy/prod/google_deployment.env.encrypted
+  volumes:
+    - ./deploy/:/deploy
+  environment:
+    CLUSTER_NAME: flash2-production
+    CLUSTER_ZONE: us-central1-b
+    IMAGE_REPO: gcr.io/flash2-production
+
+#
+# dockercfg configuration
+#
+
+prod_gcr_dockercfg:
+  image: codeship/gcr-dockercfg-generator
+  add_docker: true
+  encrypted_env_file: deploy/prod/google_deployment.env.encrypted
