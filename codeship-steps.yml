@@ -14,7 +14,7 @@
       tag: ^(master)
 
   #
-  # deploy app to k8s cluster
+  # deploy wp to k8s cluster
   #
 
 

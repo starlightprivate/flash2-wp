@@ -5,13 +5,13 @@
 prod_build_wordpress:
   build:
     image: flash2-production/wordpress
-    dockerfile_path: wordpress/Dockerfile
+    dockerfile_path: Dockerfile
   encrypted_env_file: deploy/prod/environment.env.encrypted
   cached: true
   default_cache_branch: "production"
 
 #
-# deploy app to k8s cluster
+# deploy wordpress to k8s cluster
 #
 
 prod_google_cloud_deployment_wordpress:
